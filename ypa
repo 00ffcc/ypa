@@ -189,6 +189,8 @@ namespace Cactus
 		for(int i=1;i<=n;i++)
 			if(cross[i].size())
 				cnt++;
+		random_shuffle(re.begin(),re.end());
+		while(re.size()>m-cnt)re.pop_back();
 		for(int i=1;i<cnt;i++)
 		{
 			for(int j=1;j<=10;j++)
@@ -203,7 +205,6 @@ namespace Cactus
 			}
 		}
 		random_shuffle(re.begin(),re.end());
-		while(re.size()>m)re.pop_back();
 		return re;
 	}
 }
