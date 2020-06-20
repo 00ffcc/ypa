@@ -1,27 +1,9 @@
 #include<bits/stdc++.h>
-namespace Rand
+#include<windows.h>
+namespace IO
 {
-	template<typename T>inline T random(){return (T)rand()*rand()*rand();}
-	template<typename T>inline T random(T p){return random()%p+1}
-	template<typename T1,typename T2>inline T1 random(T1 lower,T2 upper){return lower+random(upper-lower+1)-1;}
-}
-namespace Pair
-{
-	template <typename T>inline std::pair<T,T>Pair(T p)
-	{
-		std::pair<T,T>re=std::make_pair(Rand::random(p),Rand::random(p));
-		while(re.first<=re.second)re=std::make_pair(Rand::random(p),Rand::random(p));
-		return re;
-	}
-}
-namespace Tree
-{
-	temp
-}
-namespace ypa
-{
-	FILE * IN;
-	inline void IO(const char * name){fopen(name,"w+");}
+	FILE * In;
+	inline void IO(const char * name){In=fopen(name,"w+");}
 	template<typename T>
 	inline char * Insert_num(char * c,T x)
 	{
@@ -48,7 +30,78 @@ namespace ypa
 		j=Insert_num(j,x);
 		i=i+2;
 		for(;*i!='\0';i++,j++)*j=*i;
-		fprintf(stdout,"%s\n",new_name);
+//		fprintf(stdout,"%s\n",new_name);
 		IO((const char *)new_name,arg...);
 	}
 }
+namespace Rand
+{
+	template<typename T>inline T random(){return (T)rand()*rand()*rand();}
+	template<typename T>inline T random(T p){return random<T>()%p+1;}
+	template<typename T1,typename T2>inline T1 random(T1 lower,T2 upper){return lower+random(upper-lower+1)-1;}
+}
+namespace Pair
+{
+	template<typename T>inline std::pair<T,T>Pair(T p)
+	{
+		std::pair<T,T>re=std::make_pair(Rand::random(p),Rand::random(p));
+		while(re.first<=re.second)re=std::make_pair(Rand::random(p),Rand::random(p));
+		return re;
+	}
+	template<typename T>inline void Print(std::pair<T,T> re,char c='\n'){fprintf(ypa::In,"%lld %lld%c",(long long)re.first,(long long)re.second,c);}
+}
+namespace Vector
+{
+	template<typename T>std::vector<T> Vector(std::vector<T>lower,std::vector<T>upper)
+	{
+		if(lower.size()!=upper.size())
+		{
+			fprintf(stdout,"error!the parameters are different!\n");
+			return {};
+		}
+		std::vector<T> re;
+		for(int i=0;i<lower.size();i++)
+			re.push_back(Rand::random(lower[i],upper[i]));
+		return re;
+	}
+	template<typename T>inline void Print(std::vector<T> re,char c='\n')
+	{
+		for(auto i:re)fprintf(IO::In,"%lld ",(long long)i);
+		fprintf(IO::In,"%c",c);
+	}
+}
+namespace UFS
+{
+	template<int T>
+	struct UFS
+	{
+		int fa[T];
+		UFS(){for(int i=0;i<T;i++)fa[i]=i;}
+		inline int find(int x){if(fa[x]==x)return x;return fa[x]=find(fa[x]);}
+		inline void merge(int x,int y){int fat=find(x),fbt=find(y);fa[fat]=fbt;}
+		inline bool IsSplit(int x,int y){return find(x)!=find(y);}
+	};
+}
+namespace Tree
+{
+	inline std::vector<std::pair<int,int> > Tree(int n)
+	{
+		UFS::UFS<1000005> S;
+		std::vector<std::pair<int,int> > re;
+		for(int i=2;i<=n;i++)
+		{
+			for(;;)
+			{
+				int fa=Rand::random(i-1);
+				if(S.IsSplit(i,fa))
+				{
+					S.merge(i,fa);
+					re.push_back(std::make_pair(fa,i));
+					break;
+				}
+			}
+		}
+		return re;
+	}
+}
+
