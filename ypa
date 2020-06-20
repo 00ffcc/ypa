@@ -3,7 +3,7 @@
 namespace IO
 {
 	FILE * In;
-	inline void IO(const char * name){In=fopen(name,"w+");}
+	inline void IO(const char * name){In=fopen(name,"w+");srand(time(0)*clock()*1000);}
 	template<typename T>
 	inline char * Insert_num(char * c,T x)
 	{
@@ -101,14 +101,15 @@ namespace Tree
 				}
 			}
 		}
+		random_shuffle(re.begin(),re.end()); 
 		return re;
 	}
 }
 namespace Atlas
 {
-	std::map<std::pair<int,int>,bool>mp;
 	inline std::vector<std::pair<int,int> > Atlas(int n,int m)
 	{
+		std::map<std::pair<int,int>,bool>mp;		
 		if(m>n*(n-1)/2)
 		{
 			fprintf(stdout,"error!The edges are too much!\n");
@@ -128,6 +129,81 @@ namespace Atlas
 				}
 			}
 		}
+		random_shuffle(re.begin(),re.end()); 
+		return re;
+	}
+}
+namespace Cactus
+{
+	inline std::vector<std::pair<int,int> >Circle(std::vector<int> cross)
+	{
+		if(cross.size()<=1)return {}; 
+		std::vector<std::pair<int,int> > re;
+		if(Rand::random<int>()&1)//简单环 
+		{
+			for(int i=0;i<cross.size()-1;i++)
+				re.push_back(std::make_pair(cross[i],cross[i+1]));
+			re.push_back(std::make_pair(*--cross.end(),*cross.begin()));
+		}
+		else//非简单环
+		{
+			random_shuffle(cross.begin(),cross.end());
+			int last=1;
+			for(int i=1;i<cross.size();i++)
+			{
+				if(Rand::random<int>()%7<=2||i==cross.size()-1)
+				{
+					re.push_back(std::make_pair(cross[0],cross[last]));
+					re.push_back(std::make_pair(cross[0],cross[i]));
+					for(int j=last;j<i;j++)
+						re.push_back(std::make_pair(cross[j],cross[j+1]));
+					last=i+1;
+				}
+			}
+		}
+//		printf("Circle\n");
+//		for(auto i:re)printf("%d %d\n",i.first,i.second);
+		random_shuffle(re.begin(),re.end());
+		return re;
+	}
+	inline std::vector<std::pair<int,int> >Cactus(int n,int m)
+	{
+		static int belong[1000005];memset(belong,0,sizeof(belong));
+		std::vector<int> cross[1000005];
+		for(int i=1;i<=n;i++)belong[i]=Rand::random(n),cross[belong[i]].push_back(i);
+/*		for(int i=1;i<=n;i++)printf("%d ",belong[i]);printf("\n");
+		for(int i=1;i<=n;i++)
+		{
+			for(auto j:cross[i])
+				fprintf(stdout,"%d ",j);
+			fprintf(stdout,"\n");
+		}*/
+		std::vector<std::pair<int,int> > re;
+		for(int i=1;i<=n;i++)
+		{
+			std::vector<std::pair<int,int> > tp=Circle(cross[i]);
+			for(auto i:tp)re.push_back(i);
+		}
+		UFS::UFS<1000005> S;
+		int cnt=0;
+		for(int i=1;i<=n;i++)
+			if(cross[i].size())
+				cnt++;
+		for(int i=1;i<cnt;i++)
+		{
+			for(int j=1;j<=10;j++)
+			{
+				std::pair<int,int> tp=Pair::Pair(n);
+				if(S.IsSplit(belong[tp.first],belong[tp.second]))
+				{
+					S.merge(belong[tp.first],belong[tp.second]);
+					re.push_back(std::make_pair(tp.first,tp.second));
+					break;
+				}		
+			}
+		}
+		random_shuffle(re.begin(),re.end());
+		while(re.size()>m)re.pop_back();
 		return re;
 	}
 }
