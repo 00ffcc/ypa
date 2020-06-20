@@ -3,7 +3,7 @@
 namespace IO
 {
 	FILE * In;
-	inline void IO(const char * name){In=fopen(name,"w+");srand(time(0)*clock()*1000);}
+	inline void IO(const char * name){In=fopen(name,"w+");srand(time(0));}
 	template<typename T>
 	inline char * Insert_num(char * c,T x)
 	{
@@ -30,8 +30,26 @@ namespace IO
 		j=Insert_num(j,x);
 		i=i+2;
 		for(;*i!='\0';i++,j++)*j=*i;
-//		fprintf(stdout,"%s\n",new_name);
 		IO((const char *)new_name,arg...);
+	}
+}
+namespace String
+{
+	inline const char * String(const char * name){return name;}
+	template<typename T1,typename ...T2>
+	inline const char * String(const char * name,T1 x,T2 ... arg)
+	{
+		static char new_name[105];
+		std::memset(new_name,0,sizeof(new_name));
+		char * i=new  char[strlen(name)+3];
+		strcpy(i,name);
+		char * j=new_name;
+		for(;*i!='\0'&&(*i!='%'||*(i+1)!='d');i++,j++)*j=*i;
+		if(*i=='\0')return fprintf(stdout,"error!the parameters are too much!"),(const char *)name;
+		j=IO::Insert_num(j,x);
+		i=i+2;
+		for(;*i!='\0';i++,j++)*j=*i;
+		return String((const char *)new_name,arg...);
 	}
 }
 namespace Rand
@@ -193,11 +211,99 @@ namespace Cactus
 					S.merge(belong[tp.first],belong[tp.second]);
 					re.push_back(std::make_pair(tp.first,tp.second));
 					break;
-				}		
+				}
 			}
 		}
 		random_shuffle(re.begin(),re.end());
 		return re;
+	}
+}
+namespace Function
+{
+	void Function(const char *argv_0,const char *argv_1,const char *argv_2)//运行argv_0,从argv_1读入,输出到argv_2 
+	{
+		char argv0[105],argv1[105],argv2[105];
+		strcpy(argv0,argv_0);
+		strcpy(argv1,argv_1);
+		strcpy(argv2,argv_2);
+		SECURITY_ATTRIBUTES saAttr={0};
+		saAttr.nLength=sizeof(SECURITY_ATTRIBUTES);
+		saAttr.bInheritHandle=true; 
+		saAttr.lpSecurityDescriptor=NULL;
+		HANDLE ChildIn_Read,ChildIn_Write;
+		CreatePipe(&ChildIn_Read,&ChildIn_Write,&saAttr,0);
+		SetHandleInformation(ChildIn_Write,HANDLE_FLAG_INHERIT,0);
+		HANDLE ChildOut_Read,ChildOut_Write;
+		CreatePipe(&ChildOut_Read,&ChildOut_Write,&saAttr,0);
+		SetHandleInformation(ChildOut_Read,HANDLE_FLAG_INHERIT,0);
+		STARTUPINFO StartupInfo={0};
+		StartupInfo.cb=sizeof(STARTUPINFO);
+		StartupInfo.hStdError=ChildOut_Write; 
+		StartupInfo.hStdOutput=ChildOut_Write;
+		StartupInfo.hStdInput=ChildIn_Read;
+		StartupInfo.dwFlags|=STARTF_USESTDHANDLES;
+		PROCESS_INFORMATION ProcessInfo={0};
+		CreateProcess(NULL,argv0,NULL,NULL,true,NULL,NULL,NULL,&StartupInfo,&ProcessInfo);
+		bool flag=false;
+		HANDLE InputFile=CreateFile(argv1,GENERIC_READ,0,0,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+		while(true)
+		{
+			char buffer[4096]={0};
+			DWORD BytesRead,BytesWritten;
+			flag=ReadFile(InputFile,buffer,4096,&BytesRead,NULL);
+			if(!flag||(BytesRead==0))break;
+			flag=WriteFile(ChildIn_Write,buffer,BytesRead,&BytesWritten,NULL);
+			if(!flag)break;
+		}
+		CloseHandle(InputFile);
+		CloseHandle(ChildIn_Write);
+		CloseHandle(ChildOut_Write);
+		HANDLE OutputFile=CreateFile(argv2,GENERIC_WRITE,0,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+		while(true)
+		{
+			char buffer[4096]={0};
+			DWORD BytesRead,BytesWritten;
+			flag=ReadFile(ChildOut_Read,buffer,4096,&BytesRead,NULL);
+			if(!flag||(BytesRead==0))break;
+			flag=WriteFile(OutputFile,buffer,BytesRead,&BytesWritten,NULL);
+			if(!flag)break;
+		}
+		CloseHandle(OutputFile);
+	}
+}
+namespace Fc
+{
+	bool Fc(const char * name_1,const char * name_2)//比较name_1,name_2 
+	{
+		HANDLE input,output;
+		input=CreateFile(name_1,GENERIC_READ,0,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+		output=CreateFile("#hidden_file_1.ypa",GENERIC_WRITE,0,0,OPEN_ALWAYS,FILE_ATTRIBUTE_HIDDEN,NULL);
+		bool flag;
+		while(1)
+		{
+			char buffer[4096]={0};
+			DWORD BytesRead,BytesWritten;
+			flag=ReadFile(input,buffer,4096,&BytesRead,NULL);
+			if(!flag||(BytesRead==0))break;
+			flag=WriteFile(output,buffer,BytesRead,&BytesWritten,NULL);
+			if(!flag)break;
+		}
+		CloseHandle(input);
+		CloseHandle(output);
+		input=CreateFile(name_2,GENERIC_READ,0,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+		output=CreateFile("#hidden_file_2.ypa",GENERIC_WRITE,0,0,OPEN_ALWAYS,FILE_ATTRIBUTE_HIDDEN,NULL);
+		while(1)
+		{
+			char buffer[4096]={0};
+			DWORD BytesRead,BytesWritten;
+			flag=ReadFile(input,buffer,4096,&BytesRead,NULL);
+			if(!flag||(BytesRead==0))break;
+			flag=WriteFile(output,buffer,BytesRead,&BytesWritten,NULL);
+			if(!flag)break;
+		}
+		CloseHandle(input);
+		CloseHandle(output);
+		return system("fc #hidden_file_1.ypa #hidden_file_2.ypa");
 	}
 }
 
