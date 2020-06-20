@@ -164,7 +164,7 @@ namespace Cactus
 		random_shuffle(re.begin(),re.end());
 		return re;
 	}
-	inline std::vector<std::pair<int,int> >Cactus(int n,int m)
+	inline std::vector<std::pair<int,int> >Cactus(int n,int m,double alpha=1)//alpha:
 	{
 		static int belong[1000005];memset(belong,0,sizeof(belong));
 		std::vector<int> cross[1000005];
@@ -184,6 +184,7 @@ namespace Cactus
 		while(re.size()>m-cnt)re.pop_back();
 		for(int i=1;i<cnt;i++)
 		{
+			if(alpha*RAND_MAX<std::rand())continue;
 			for(;;)
 			{
 				std::pair<int,int> tp=Pair::Pair(n);
