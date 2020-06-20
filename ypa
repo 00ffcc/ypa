@@ -161,8 +161,6 @@ namespace Cactus
 				}
 			}
 		}
-//		printf("Circle\n");
-//		for(auto i:re)printf("%d %d\n",i.first,i.second);
 		random_shuffle(re.begin(),re.end());
 		return re;
 	}
@@ -171,13 +169,6 @@ namespace Cactus
 		static int belong[1000005];memset(belong,0,sizeof(belong));
 		std::vector<int> cross[1000005];
 		for(int i=1;i<=n;i++)belong[i]=Rand::random(n),cross[belong[i]].push_back(i);
-/*		for(int i=1;i<=n;i++)printf("%d ",belong[i]);printf("\n");
-		for(int i=1;i<=n;i++)
-		{
-			for(auto j:cross[i])
-				fprintf(stdout,"%d ",j);
-			fprintf(stdout,"\n");
-		}*/
 		std::vector<std::pair<int,int> > re;
 		for(int i=1;i<=n;i++)
 		{
@@ -193,7 +184,7 @@ namespace Cactus
 		while(re.size()>m-cnt)re.pop_back();
 		for(int i=1;i<cnt;i++)
 		{
-			for(int j=1;j<=10;j++)
+			for(;;)
 			{
 				std::pair<int,int> tp=Pair::Pair(n);
 				if(S.IsSplit(belong[tp.first],belong[tp.second]))
