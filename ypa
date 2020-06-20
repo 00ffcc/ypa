@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+namespace Rand
+{
+	template<typename T>inline T random(){return (T)rand()*rand()*rand();}
+	template<typename T>inline T random(T p){return random()%p+1}
+	template<typename T1,typename T2>inline T1 random(T1 lower,T2 upper){return lower+random(upper-lower+1)-1;}
+}
+namespace Pair
+{
+	template <typename T>inline std::pair<T,T>Pair(T p)
+	{
+		std::pair<T,T>re=std::make_pair(Rand::random(p),Rand::random(p));
+		while(re.first<=re.second)re=std::make_pair(Rand::random(p),Rand::random(p));
+		return re;
+	}
+}
+namespace Tree
+{
+	temp
+}
+namespace ypa
+{
+	FILE * IN;
+	inline void IO(const char * name){fopen(name,"w+");}
+	template<typename T>
+	inline char * Insert_num(char * c,T x)
+	{
+		int len=-1;
+		if(x==0)c[len=0]='0';
+		while(x)
+		{
+			c[++len]=x%10+'0';
+			x/=10;
+		}
+		for(int i=0,j=len;i<j;i++,j--)std::swap(c[i],c[j]);
+		return c+len+1;
+	}
+	template<typename T1,typename ...T2>
+	inline void IO(const char * name,T1 x,T2 ... arg)
+	{
+		static char new_name[105];
+		std::memset(new_name,0,sizeof(new_name));
+		char * i=new  char[strlen(name)+3];
+		strcpy(i,name);
+		char * j=new_name;
+		for(;*i!='\0'&&(*i!='%'||*(i+1)!='d');i++,j++)*j=*i;
+		if(*i=='\0')return fprintf(stdout,"error!the parameters are too much!"),IO(name),void();
+		j=Insert_num(j,x);
+		i=i+2;
+		for(;*i!='\0';i++,j++)*j=*i;
+		fprintf(stdout,"%s\n",new_name);
+		IO((const char *)new_name,arg...);
+	}
+}
