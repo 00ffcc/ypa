@@ -13,14 +13,23 @@
 
 `int re=Rand::random(2333,19260817);`生成一个 $\in [2333,19260817]$ 的数
 ## Pair
-`pair<int,int>=Pair(19,260817);`
+`pair<int,int> re=Pair::Pair(19,260817);`生成一个`std::pair<int,int>`,保证 $re.first< re.second$ 且 $re.first,re.second\in [19,260817]$
+
+`Pair::Print(re)`输出这个`pair`并换行
+
+`Pair::Print(re,' ');`输出这个`pair`并在其后输出`' '`,不换行
 ## Vector 
 `vector<int> re=Vector<int>({23,33,333},{192,60,817});`生成一个有`3`个元素,分别 $\in [23,192],\in [33,60],\in [333,817]$ 的向量
 
 `Vector::Print(re);`输出这个向量并换行
 
 `Vector::Print(re,' ');`输出这个向量并在其后输出`' '`,不换行
+## UFS
+`UFS::UFS<10000> S;`创建并初始化一个大小为`10000`的并查集,从`0`开始标号
 
+`S.IsSplit(x,y);`查询`x`,`y`是否处在两个不同的集合
+
+`S.merge(x,y);`合并`x`,`y`所在集合
 ## Tree
 `vector<pair<int,int> > re=Tree::Tree(50000);`生成一棵有`50000`个节点的树
 
