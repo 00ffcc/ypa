@@ -6,7 +6,12 @@
 `IO::IO("ypa_test.in");`向`ypa_test.in`中输入数据
 
 `IO::IO("ypa_test_%d_%d_%d.in",192,60,817);`向`ypa_test_192_60_817.in`中输入数据
+## Rand
+`int re=Rand::random<int>();`生成一个数
 
+`int re=Rand::random(19260817)`生成一个 $\in [1,19260817]$ 的数
+
+`int re=Rand::random(2333,19260817)`生成一个 $\in [2333,19260817]$ 的数
 ## Vector 
 `vector<int> re=Vector<int>({23,33,333},{192,60,817});`生成一个有`3`个元素,分别 $\in [23,192],\in [33,60],\in [333,817]$ 的向量
 
@@ -19,8 +24,9 @@
 
 `for(auto i:re)Pair::Print(i);`输出这棵树
 
+## Atlas
+`vector<pair<int,int> > re=Atlas::Atlas(50000,500000);`生成一张有`50000`个点,`500000`
 ## Cactus
-
 `vector<pair<int,int> >re=Cactus::Cactus(50000,500000,0.8);`
 
 
