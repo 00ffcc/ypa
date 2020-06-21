@@ -35,11 +35,16 @@ namespace IO
 }
 namespace String
 {
-	inline const char * String(const char * name){return name;}
+	inline const char * String(const char * name)
+	{
+		char * new_name=new char [strlen(name)+10];
+		std::strcpy(new_name,name);
+		return new_name;
+	}
 	template<typename T1,typename ...T2>
 	inline const char * String(const char * name,T1 x,T2 ... arg)
 	{
-		static char new_name[105];
+		char new_name[105];
 		std::memset(new_name,0,sizeof(new_name));
 		char * i=new  char[strlen(name)+3];
 		strcpy(i,name);
@@ -49,6 +54,7 @@ namespace String
 		j=IO::Insert_num(j,x);
 		i=i+2;
 		for(;*i!='\0';i++,j++)*j=*i;
+//		printf("%s\n",new_name);
 		return String((const char *)new_name,arg...);
 	}
 }
@@ -226,6 +232,7 @@ namespace Function
 		strcpy(argv0,argv_0);
 		strcpy(argv1,argv_1);
 		strcpy(argv2,argv_2);
+//		printf("%s\n%s\n%s\n",argv_0,argv_1,argv_2);
 		SECURITY_ATTRIBUTES saAttr={0};
 		saAttr.nLength=sizeof(SECURITY_ATTRIBUTES);
 		saAttr.bInheritHandle=true; 
