@@ -9,9 +9,11 @@
 ## Rand
 `int re=Rand::random<int>();`生成一个数
 
-`int re=Rand::random(19260817)`生成一个 $\in [1,19260817]$ 的数
+`int re=Rand::random(19260817);`生成一个 $\in [1,19260817]$ 的数
 
-`int re=Rand::random(2333,19260817)`生成一个 $\in [2333,19260817]$ 的数
+`int re=Rand::random(2333,19260817);`生成一个 $\in [2333,19260817]$ 的数
+## Pair
+`pair<int,int>=Pair(19,260817);`
 ## Vector 
 `vector<int> re=Vector<int>({23,33,333},{192,60,817});`生成一个有`3`个元素,分别 $\in [23,192],\in [33,60],\in [333,817]$ 的向量
 
@@ -25,15 +27,21 @@
 `for(auto i:re)Pair::Print(i);`输出这棵树
 
 ## Atlas
-`vector<pair<int,int> > re=Atlas::Atlas(50000,500000);`生成一张有`50000`个点,`500000`
+`vector<pair<int,int> > re=Atlas::Atlas(50000,500000);`生成一张有`50000`个点,`500000`条边的联通图
+
+`for(auto i:re)Pair::Print(i);`输出这张图
 ## Cactus
-`vector<pair<int,int> >re=Cactus::Cactus(50000,500000,0.8);`
+`vector<pair<int,int> >re=Cactus::Cactus(50000,500000,0.8);`生成一个有`50000`个点,**至多**`500000`条边的仙人掌,`0.8`是`炼铜系数`,越大联通块个数越少,为`1`是保证联通
 
+`fprintf(IO::In,"%d %d\n",50000,re.size());`输出这个仙人掌的点数和边数
 
-`fprintf(IO::In,"%d %d\n",50000,re.size());`
+`for(auto i:re)Pair::Print(i);`输出这个仙人掌
+## Function
+`Function::Function("std_check.exe","ypa_test.in","ypa_test.out");`运行`std_check.exe`,从`ypa_test.in`中读取数据,输入到`ypa_test.out`中
 
-`for(auto i:re)Pair::Print(i);`
+## Fc
+`Fc::Fc("ypa_test.out","ypa_test.ans");`判断`ypa_test.out`与`ypa_test.ans`是否相等
 
-`fclose(IO::In);`
+## std
+`fclose(IO::In);`关闭文件,以供其他进程读取
 
-`Function::Function("std_check.exe","ypa_test.in","ypa_test.out");`
