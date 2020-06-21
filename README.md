@@ -9,11 +9,11 @@
 ## Rand
 `int re=Rand::random<int>();`生成一个数
 
-`int re=Rand::random(19260817);`生成一个 $\in [1,19260817]$ 的数
+`int re=Rand::random(19260817);`生成一个 $\in 1,19260817$ 的数
 
 `int re=Rand::random(2333,19260817);`生成一个 $\in [2333,19260817]$ 的数
 ## Pair
-`pair<int,int> re=Pair::Pair(19,260817);`生成一个`std::pair<int,int>`,保证 $re.first< re.second$ 且 $re.first,re.second\in [19,260817]$
+`pair<int,int> re=Pair::Pair(19,260817);`生成一个`std::pair<int,int>`,保证 $re.first < re.second$ 且 $re.first,re.second\in [19,260817]$
 
 `Pair::Print(re)`输出这个`pair`并换行
 
