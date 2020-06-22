@@ -33,16 +33,16 @@ namespace IO
 		IO((const char *)new_name,arg...);
 	}
 }
-namespace String
+namespace Put
 {
-	inline const char * String(const char * name)
+	inline const char * Put(const char * name)
 	{
 		char * new_name=new char [strlen(name)+10];
 		std::strcpy(new_name,name);
 		return new_name;
 	}
 	template<typename T1,typename ...T2>
-	inline const char * String(const char * name,T1 x,T2 ... arg)
+	inline const char * Put(const char * name,T1 x,T2 ... arg)
 	{
 		char new_name[105];
 		std::memset(new_name,0,sizeof(new_name));
@@ -55,7 +55,7 @@ namespace String
 		i=i+2;
 		for(;*i!='\0';i++,j++)*j=*i;
 //		printf("%s\n",new_name);
-		return String((const char *)new_name,arg...);
+		return Put((const char *)new_name,arg...);
 	}
 }
 namespace Rand
@@ -63,6 +63,23 @@ namespace Rand
 	template<typename T>inline T random(){return (T)rand()*rand()*rand();}
 	template<typename T>inline T random(T p){return (random<T>()%p+p)%p+1;}
 	template<typename T1,typename T2>inline T1 random(T1 lower,T2 upper){return lower+random(upper-lower+1)-1;}
+}
+namespace String
+{
+	std::vector<char> String(int len,const char * S)
+	{
+		std::vector<char> re;
+		int n=strlen(S);
+		for(int i=1;i<=len;i++)
+			re.push_back(*(S+Rand::random(0,n-1)));	
+		return re;
+	}
+	inline void Print(std::vector<char> re,char c='\n')
+	{
+		for(auto i:re)
+			fprintf(IO::In,"%c",i);
+		fprintf(IO::In,"%c",c);
+	}
 }
 namespace Pair
 {
@@ -222,6 +239,23 @@ namespace Cactus
 		}
 		random_shuffle(re.begin(),re.end());
 		return re;
+	}
+}
+namespace Sequence
+{
+	template<typename T>
+	inline std::vector<T>Sequence(int len,T lower,T upper)
+	{
+		std::vector<T> re;
+		for(int i=1;i<=len;i++)
+			re.push_back(Rand::random(lower,upper));
+		return re;
+	}
+	template<typename T>
+	inline void Print(std::vector<T>re,char c=' ')
+	{
+		for(auto i:re)
+		std::cout<<i<<c;
 	}
 }
 namespace Function
