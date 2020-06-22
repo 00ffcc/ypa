@@ -11,15 +11,15 @@
 
 `int re=Rand::random(19260817);`生成一个 <img src="http://00ffcc.cf/images/MommyTalk159282195765445.png" width = "100" height = "25" alt="" align=center /> 的数
 
-`int re=Rand::random(2333,19260817);`生成一个 <img src="http://00ffcc.cf/images/MommyTalk159282199645326.png" width = "100" height = "25" alt="" align=center /> 的数
+`int re=Rand::random(2333,19260817);`生成一个 <img src="http://00ffcc.cf/images/MommyTalk159282199645326.png" width = "150" height = "25" alt="" align=center /> 的数
 ## Pair
-`pair<int,int> re=Pair::Pair(19,260817);`生成一个`std::pair<int,int>`,保证 <img src="http://00ffcc.cf/images/MommyTalk159282201943832.png" width = "100" height = "25" alt="" align=center /> 且 <img src="http://00ffcc.cf/images/MommyTalk159282203824389.png" width = "100" height = "25" alt="" align=center />
+`pair<int,int> re=Pair::Pair(19,260817);`生成一个`std::pair<int,int>`,保证 <img src="http://00ffcc.cf/images/MommyTalk159282201943832.png" width = "200" height = "25" alt="" align=center /> 且 <img src="http://00ffcc.cf/images/MommyTalk159282203824389.png" width = "300" height = "25" alt="" align=center />
 
 `Pair::Print(re)`输出这个`pair`并换行
 
 `Pair::Print(re,' ');`输出这个`pair`并在其后输出`' '`,不换行
 ## Vector 
-`vector<int> re=Vector<int>({23,33,333},{192,60,817});`生成一个有`3`个元素,分别 <img src="http://00ffcc.cf/images/MommyTalk159282206336941.png" width = "100" height = "25" alt="" align=center /> 的向量
+`vector<int> re=Vector<int>({23,33,333},{192,60,817});`生成一个有`3`个元素,分别 <img src="http://00ffcc.cf/images/MommyTalk159282206336941.png" width = "400" height = "25" alt="" align=center /> 的向量
 
 `Vector::Print(re);`输出这个向量并换行
 
