@@ -9,7 +9,7 @@
 ## Rand
 `int re=Rand::random<int>();`生成一个数
 
-`int re=Rand::random(19260817);`生成一个 $\in [1,19260817]$ 的数
+`int re=Rand::random(19260817);`生成一个 ![](http://00ffcc.cf/images/MommyTalk159282195765445.png) 的数
 
 `int re=Rand::random(2333,19260817);`生成一个 $\in [2333,19260817]$ 的数
 ## Pair
