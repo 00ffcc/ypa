@@ -258,6 +258,20 @@ namespace Sequence
 		std::cout<<i<<c;
 	}
 }
+namespace Print_Atlas
+{
+	template<typename T>
+	inline void Print_Atlas(std::vector<std::pair<int,int> >re,std::vector<T> lower,std::vector<T> upper)
+	{
+		for(auto i:re)
+		{
+			Pair::Print(i,' ');
+			for(int j=0;j!=lower.size();j++)
+				fprintf(IO::In,"%lld ",(long long)Rand::random(lower[j],upper[j]));
+			fprintf(IO::In,"\n");
+		}
+	}
+}
 namespace Function
 {
 	void Function(const char *argv_0,const char *argv_1,const char *argv_2)//运行argv_0,从argv_1读入,输出到argv_2 
