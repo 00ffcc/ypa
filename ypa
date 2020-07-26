@@ -58,6 +58,14 @@ namespace Put
 		return Put((const char *)new_name,arg...);
 	}
 }
+namespace Printf
+{
+	template<typename T1,typename ...T2>
+	inline void Printf(const char * name,T1 x,T2 ... arg)
+	{
+		fprintf(IO::In,Put::Put(name,x,arg...));
+	}
+}
 namespace Rand
 {
 	template<typename T>inline T random(){return (T)rand()*rand()*rand();}
@@ -254,8 +262,21 @@ namespace Sequence
 	template<typename T>
 	inline void Print(std::vector<T>re,char c=' ')
 	{
-		for(auto i:re)
-		std::cout<<i<<c;
+		for(auto i:re)Printf::Printf("%d",i),fprintf(IO::In,"%c",c);
+	}
+}
+namespace Array
+{
+	inline std::vector<int>Array(int len)
+	{
+		std::vector<int> re;
+		for(int i=1;i<=len;i++)re.push_back(i);
+		std::random_shuffle(re.begin(),re.end());
+		return re;
+	}
+	inline void Print(std::vector<int> re,char c=' ')
+	{
+		for(auto i:re)Printf::Printf("%d",i),fprintf(IO::In,"%c",c);
 	}
 }
 namespace Print_Atlas
